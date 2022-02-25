@@ -123,12 +123,12 @@ class CategoriesController extends AdminController
     }
 
     //定义下拉框搜索接口
-    public function apiIndex(Request $resquest)
+    public function apiIndex(Request $request)
     {
         //用户输入的值通过q参数获取
-        $search = $resquest->input('q');
+        $search = $request->input('q');
         $result = Category::query()
-            ->where('is_directory', true)
+            ->where('is_directory',  boolval($request->input('is_directory', true)))
             ->where('name', 'like', '%' . $search . '%')
             ->paginate();
         //把查询出来的结果重新组装成laravel-admin 需要的格式
